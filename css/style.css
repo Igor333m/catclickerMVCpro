@@ -1,0 +1,56 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+	text-align: center;
+}
+
+
+aside {
+	padding-bottom: 5%;
+	text-align: center;
+}
+
+ul {
+	list-style-type: none;
+	cursor: pointer;
+}
+
+li {
+	background-color: red;
+	padding: 1em 2em;
+	margin-left: 1em;
+	border-radius: 0.4em;
+	box-shadow: 2px 5px 18px #888888;
+	display: inline-block;
+	color: white;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.container {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-column-gap: 15px;
+}
+
+
+article {
+	width: 45%;
+	padding-left: 2em;
+}
