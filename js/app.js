@@ -2,6 +2,7 @@
 let model = {
 	// Number of selected cat in the model
 	currentCat: 0,
+	adminShow: false,
 	cats:[ 
 		{
 			name: "Miki",
@@ -69,13 +70,21 @@ let octopus = {
 			model.cats[model.currentCat].numClicks += 1;
 			viewCat.catClicksHTML(model.cats[model.currentCat].numClicks);
 		});
-	}
+	},
+	openForm: null,
+	closeForm: null,
+	updateCurrentCat: null
 };
 
 //**********************************************************************//
 let viewList = {
-	// Creates list of all cats
+	// Creates list of all cats and create event listeners for form buttons
 	init: function() {
+		this.admin = document.getElementById("admin");
+		this.cancel = document.getElementById("cancel");
+		this.submit = document.querySelector('[type="submit"]');
+		console.log(this.cancel);
+		console.log(this.submit);
 		const listOfCats = document.querySelector(".list");
 		octopus.allCats().forEach( cat => {
 			listOfCats.insertAdjacentHTML("beforeend", `<li>${cat.name}</li>`);
