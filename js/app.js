@@ -41,7 +41,9 @@ let model = {
 // Lary the octopus is the controller
 let octopus = {
 	init: function() {
-		viewList.init();
+		this.form = document.getElementById("form");
+		console.log(this.form);
+		view.init();
 		viewCat.init();
 		this.catClick();
 		this.catClickCounter();
@@ -72,19 +74,30 @@ let octopus = {
 		});
 	},
 	openForm: null,
-	closeForm: null,
+	toggleForm: function(visibleForm) {
+		if (visibleForm === true) {
+			this.form.setAttribute("hidden", true);
+			model.adminShow = false;
+		}else{
+			this.form.removeAttribute("hidden");
+			model.adminShow = true;
+		}
+	},
 	updateCurrentCat: null
 };
 
 //**********************************************************************//
-let viewList = {
+let view = {
 	// Creates list of all cats and create event listeners for form buttons
 	init: function() {
 		this.admin = document.getElementById("admin");
 		this.cancel = document.getElementById("cancel");
 		this.submit = document.querySelector('[type="submit"]');
-		console.log(this.cancel);
-		console.log(this.submit);
+		this.admin.onclick = e => {
+			e.preventDefault();
+			console.log("Admin clicked");
+			octopus.toggleForm(model.adminShow);
+		}
 		const listOfCats = document.querySelector(".list");
 		octopus.allCats().forEach( cat => {
 			listOfCats.insertAdjacentHTML("beforeend", `<li>${cat.name}</li>`);
