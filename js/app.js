@@ -73,15 +73,13 @@ let octopus = {
 			viewCat.catClicksHTML(model.cats[model.currentCat].numClicks);
 		});
 	},
-	openForm: null,
-	toggleForm: function(visibleForm) {
-		if (visibleForm === true) {
-			this.form.setAttribute("hidden", true);
-			model.adminShow = false;
-		}else{
-			this.form.removeAttribute("hidden");
-			model.adminShow = true;
-		}
+	closeForm: function() {
+		this.form.setAttribute("hidden", true);
+		model.adminShow = false;
+	},
+	openForm: function() {
+		this.form.removeAttribute("hidden");
+		model.adminShow = true;
 	},
 	updateCurrentCat: null
 };
@@ -96,7 +94,7 @@ let view = {
 		this.admin.onclick = e => {
 			e.preventDefault();
 			console.log("Admin clicked");
-			octopus.toggleForm(model.adminShow);
+			octopus.openForm();
 		}
 		const listOfCats = document.querySelector(".list");
 		octopus.allCats().forEach( cat => {
