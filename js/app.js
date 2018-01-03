@@ -3,44 +3,56 @@ let model = {
 	// Number of selected cat in the model
 	currentCat: 0,
 	adminShow: false,
-	cats:[ 
-		{
-			name: "Miki",
-			img: "cat.jpg",
-			numClicks: 0
-		},
-		{
-			name: "Donald",
-			img: "cat2.jpg",
-			numClicks: 0
-		},
-		{
-			name: "Ana",
-			img: "cat3.jpg",
-			numClicks: 0
-		},
-		{
-			name: "Arthur",
-			img: "cat4.jpg",
-			numClicks: 0
-		},
-		{
-			name: "Aragorn",
-			img: "cat5.jpg",
-			numClicks: 0
-		},
-		{
-			name: "Lilly",
-			img: "cat6.jpg",
-			numClicks: 0
-		}
-	]
+	// Checks for localStorage and add one if none
+	init: function() {
+        if (!localStorage.cats) {
+            localStorage.setItem("cats", `[ 
+					{
+						name: "Miki",
+						img: "cat.jpg",
+						numClicks: 0
+					},
+					{
+						name: "Donald",
+						img: "cat2.jpg",
+						numClicks: 0
+					},
+					{
+						name: "Ana",
+						img: "cat3.jpg",
+						numClicks: 0
+					},
+					{
+						name: "Arthur",
+						img: "cat4.jpg",
+						numClicks: 0
+					},
+					{
+						name: "Aragorn",
+						img: "cat5.jpg",
+						numClicks: 0
+					},
+					{
+						name: "Lilly",
+						img: "cat6.jpg",
+						numClicks: 0
+					}
+				]`);
+			localStorage.currentCat = 0;
+        }
+    },
+    getAllCats: function() {
+    	console.log(localStorage.getItem("cats"));
+    	return localStorage.getItem("cats");
+    }
 };
 
 //**********************************************************************//
 // Lary the octopus is the controller
 let octopus = {
 	init: function() {
+		model.init();
+		model.getAllCats();
 		this.form = document.getElementById("form");
 		console.log(this.form);
 		view.init();
@@ -110,7 +122,7 @@ let view = {
 			octopus.closeForm();
 		}
 		this.submit.onclick = e => {
-			e.preventDefault();
+			//e.preventDefault();
 			console.log(this.submit);
 			octopus.updateCurrentCat(e);
 			octopus.closeForm();
