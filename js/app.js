@@ -81,7 +81,15 @@ let octopus = {
 		this.form.removeAttribute("hidden");
 		model.adminShow = true;
 	},
-	updateCurrentCat: null
+	updateCurrentCat: function(data) {
+		let KeyValuePair = [];
+		let SearchString = window.location.search.substring(1);
+    	let VariableArray = SearchString.split('&');
+    	for(let i = 0; i < VariableArray.length; i++){
+	        KeyValuePair.push(VariableArray[i].split('='));
+	    }
+	    console.log(KeyValuePair);
+	}
 };
 
 //**********************************************************************//
@@ -95,6 +103,17 @@ let view = {
 			e.preventDefault();
 			console.log("Admin clicked");
 			octopus.openForm();
+		}
+		this.cancel.onclick = e => {
+			e.preventDefault();
+			console.log("cancel clicked");
+			octopus.closeForm();
+		}
+		this.submit.onclick = e => {
+			e.preventDefault();
+			console.log(this.submit);
+			octopus.updateCurrentCat(e);
+			octopus.closeForm();
 		}
 		const listOfCats = document.querySelector(".list");
 		octopus.allCats().forEach( cat => {

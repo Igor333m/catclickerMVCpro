@@ -22,11 +22,11 @@
     <section class="container">
         
     </section>
-    <form>
+    <form method="get">
         <button id="admin">Admin</button>
         <div id="form" hidden>
             <label for="name">Name:</label>
-            <input type="text" name="cat_name">
+            <input type="text" id="name" name="cat_name">
             <br>
             <label for="imgURL">ImgURL:</label>
             <input type="text" id="imgURL" name="imgURL">
@@ -35,7 +35,7 @@
             <input type="text" id="num_of_clicks" name="number_of_clicks">
             <br>
             <button id="cancel">Cancel</button>
-            <button type="submit">Save</button>
+            <input type="submit" value="Submit">
         </div>
     </form>
     <script src="js/app.js"></script>
