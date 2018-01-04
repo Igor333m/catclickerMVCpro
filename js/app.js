@@ -1,7 +1,6 @@
 // Model with all data
 let model = {
 	// Number of selected cat in the model
-	currentCat: 0,
 	adminShow: false,
 	cats: [{ name: "Miki",	img: "cat.jpg",	numClicks: 0 },	{ name: "Donald", img: "cat2.jpg", numClicks: 0	}, { name: "Ana", img: "cat3.jpg", numClicks: 0 }, { name: "Arthur", img: "cat4.jpg", numClicks: 0 }, { name: "Aragorn",img: "cat5.jpg", numClicks: 0 }, { name: "Lilly", img: "cat6.jpg",numClicks: 0 }],
 	// Checks for localStorage and add one if none
@@ -9,7 +8,7 @@ let model = {
 		this.jsonCats = JSON.stringify(this.cats);
         if (!localStorage.cats) {
             localStorage.setItem("cats", this.jsonCats);
-			localStorage.currentCat = 0;
+			localStorage.setItem("currentCat", 0);
         }
     },
     updateStorage:function() {
@@ -17,7 +16,6 @@ let model = {
     	localStorage.setItem("cats", this.jsonCats);
     },
     getAllCats: function() {
-    	console.log(typeof localStorage.getItem("cats"));
     	let localResults = JSON.parse(localStorage.getItem("cats"));
     	console.log(localResults[1]);
     	return localResults;
@@ -50,7 +48,7 @@ let octopus = {
 					// Set currentCat
 					localStorage.currentCat = i;
 					// return clicked cat object
-					return viewCat.showCat(model.cats[i]);
+					return viewCat.showCat(model.getAllCats()[i]);
 				}
 			});
 		}
@@ -58,8 +56,9 @@ let octopus = {
 	// Update the counter for each cat and tells the view to display
 	catClickCounter: function() {
 		$(".container").on("click", "img", function() {
-			model.cats[model.currentCat].numClicks += 1;
-			viewCat.catClicksHTML(model.cats[model.currentCat].numClicks);
+			model.cats[localStorage.currentCat].numClicks += 1;
+			viewCat.catClicksHTML(model.cats[localStorage.currentCat].numClicks);
+			model.updateStorage();
 		});
 	},
 	closeForm: function() {
@@ -109,9 +108,9 @@ let viewCat = {
 	init: function() {
 		containerHtml = `
 			<article>
-				<h1>${model.cats[0].name}</h1>
-				<img src="img/${model.cats[0].img}" alt="${model.cats[0].name} the cat" data-cat="${model.cats[0].name}">
-	        	<h2>Number of clicks <span>${model.cats[0].numClicks}</span></h2>
+				<h1>${model.getAllCats()[localStorage.currentCat].name}</h1>
+				<img src="img/${model.getAllCats()[localStorage.currentCat].img}" alt="${model.getAllCats()[localStorage.currentCat].name} the cat" data-cat="${model.getAllCats()[localStorage.currentCat].name}">
+	        	<h2>Number of clicks <span>${model.getAllCats()[localStorage.currentCat].numClicks}</span></h2>
 	        </article>
 		`;
 		document.querySelector(".container").insertAdjacentHTML("afterbegin", containerHtml);
