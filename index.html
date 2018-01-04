@@ -23,17 +23,17 @@
         
     </section>
     <button id="resetButton">Reset clicks</button>
-    <form method="get">
+    <form>
         <button id="admin">Admin</button>
         <div id="form" hidden>
             <label for="name">Name:</label>
-            <input type="text" id="name" name="cat_name">
+            <input type="text" id="name" name="cat_name" required placeholder="Cats new name">
             <br>
             <label for="imgURL">ImgURL:</label>
             <input type="text" id="imgURL" name="imgURL">
             <br>
             <label for="num_of_clicks">Number of clicks:</label>
-            <input type="text" id="num_of_clicks" name="number_of_clicks">
+            <input type="text" id="num_of_clicks" name="number_of_clicks" required placeholder="New number of clicks">
             <br>
             <button id="cancel">Cancel</button>
             <input type="submit" value="Submit">

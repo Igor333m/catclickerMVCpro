@@ -72,7 +72,9 @@ let octopus = {
 		this.form.removeAttribute("hidden");
 		model.adminShow = true;
 	},
-	updateCurrentCat: null,
+	updateCurrentCat: function(valueList) {
+		console.log(valueList);
+	},
 };
 
 //**********************************************************************//
@@ -81,8 +83,11 @@ let view = {
 	init: function() {
 		this.admin = document.getElementById("admin");
 		this.cancel = document.getElementById("cancel");
-		this.submit = document.querySelector("[type='submit']");
+		this.submit = document.querySelector("form");
 		this.resetButton = document.getElementById("resetButton");
+		this.name = document.getElementById("name");
+		this.imgUrl = document.getElementById("imgUrl");
+		this.numOfClicks = document.getElementById("num_of_clicks");
 		this.admin.onclick = e => {
 			e.preventDefault();
 			console.log("Admin clicked");
@@ -93,10 +98,15 @@ let view = {
 			console.log("cancel clicked");
 			octopus.closeForm();
 		}
-		this.submit.onclick = e => {
-			//e.preventDefault();
-			console.log(this.submit);
-			octopus.updateCurrentCat(e);
+		this.submit.onsubmit = e => {
+			// cancel the form's default action
+			e.preventDefault();
+			let valueList = [];
+			console.log(this.name.value);
+			valueList.push(this.name.value);
+			valueList.push(this.imgUrl.value);
+			valueList.push(this.numOfClicks.value);
+			octopus.updateCurrentCat(valueList);
 			octopus.closeForm();
 		}
 		this.resetButton.onclick = e => {
