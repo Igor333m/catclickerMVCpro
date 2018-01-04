@@ -34,7 +34,7 @@ let octopus = {
 		view.init();
 		viewCat.init();
 		this.catClick();
-		this.catClickCounter();
+		viewCat.catClickCounter();
 	},
 	// maps through all cats
 	allCats: function() {
@@ -54,13 +54,11 @@ let octopus = {
 			});
 		}
 	},
-	// Update the counter for each cat and tells the view to display
-	catClickCounter: function() {
-		$(".container").on("click", "img", function() {
-			model.cats[localStorage.currentCat].numClicks += 1;
-			model.updateStorage();
-			viewCat.catClicksHTML(model.getAllCats()[localStorage.currentCat].numClicks);
-		});
+	// Update the counter
+	updateCounter: function() {
+		model.cats[localStorage.currentCat].numClicks += 1;
+		model.updateStorage();
+		viewCat.catClicksHTML(model.getAllCats()[localStorage.currentCat].numClicks);
 	},
 	closeForm: function() {
 		this.form.setAttribute("hidden", true);
@@ -70,7 +68,11 @@ let octopus = {
 		this.form.removeAttribute("hidden");
 		model.adminShow = true;
 	},
-	updateCurrentCat: null
+	updateCurrentCat: null,
+
+	resetButton: function() {
+		// body...
+	}
 };
 
 //**********************************************************************//
@@ -79,7 +81,8 @@ let view = {
 	init: function() {
 		this.admin = document.getElementById("admin");
 		this.cancel = document.getElementById("cancel");
-		this.submit = document.querySelector('[type="submit"]');
+		this.submit = document.querySelector("[type='submit']");
+		this.resetButton = document.getElementById("resetButton");
 		this.admin.onclick = e => {
 			e.preventDefault();
 			console.log("Admin clicked");
@@ -96,6 +99,12 @@ let view = {
 			octopus.updateCurrentCat(e);
 			octopus.closeForm();
 		}
+		this.resetButton.onclick = e => {
+			e.preventDefault();
+			console.log(this.resetButton);
+			octopus.updateCurrentCat(e);
+			octopus.closeForm();
+		}
 		const listOfCats = document.querySelector(".list");
 		octopus.allCats().forEach( cat => {
 			listOfCats.insertAdjacentHTML("beforeend", `<li>${cat.name}</li>`);
@@ -107,6 +116,7 @@ let view = {
 let viewCat = {
 	// Create cat window
 	init: function() {
+		this.container = $(".container");
 		containerHtml = `
 			<article>
 				<h1>${model.getAllCats()[localStorage.currentCat].name}</h1>
@@ -130,10 +140,17 @@ let viewCat = {
 		`;
 		document.querySelector(".container").insertAdjacentHTML("afterbegin", containerHtml);
 	},
+	// Update the counter for clicked cat
+	catClickCounter: function() {
+		this.container.on("click", "img", function() {
+			console.log("img clicks");
+			octopus.updateCounter();
+		});
+	},
 	// Show number of clicks for particular cat
 	catClicksHTML: function(clicks) {
 		document.querySelector("h2 span").textContent = clicks;
 	}
-}; 
+};
 
 octopus.init();
