@@ -3,47 +3,24 @@ let model = {
 	// Number of selected cat in the model
 	currentCat: 0,
 	adminShow: false,
+	cats: [{ name: "Miki",	img: "cat.jpg",	numClicks: 0 },	{ name: "Donald", img: "cat2.jpg", numClicks: 0	}, { name: "Ana", img: "cat3.jpg", numClicks: 0 }, { name: "Arthur", img: "cat4.jpg", numClicks: 0 }, { name: "Aragorn",img: "cat5.jpg", numClicks: 0 }, { name: "Lilly", img: "cat6.jpg",numClicks: 0 }],
 	// Checks for localStorage and add one if none
 	init: function() {
+		this.jsonCats = JSON.stringify(this.cats);
         if (!localStorage.cats) {
-            localStorage.setItem("cats", `[ 
-					{
-						name: "Miki",
-						img: "cat.jpg",
-						numClicks: 0
-					},
-					{
-						name: "Donald",
-						img: "cat2.jpg",
-						numClicks: 0
-					},
-					{
-						name: "Ana",
-						img: "cat3.jpg",
-						numClicks: 0
-					},
-					{
-						name: "Arthur",
-						img: "cat4.jpg",
-						numClicks: 0
-					},
-					{
-						name: "Aragorn",
-						img: "cat5.jpg",
-						numClicks: 0
-					},
-					{
-						name: "Lilly",
-						img: "cat6.jpg",
-						numClicks: 0
-					}
-				]`);
+            localStorage.setItem("cats", this.jsonCats);
 			localStorage.currentCat = 0;
         }
     },
+    updateStorage:function() {
+    	this.jsonCats = JSON.stringify(this.cats);
+    	localStorage.setItem("cats", this.jsonCats);
+    },
     getAllCats: function() {
-    	console.log(localStorage.getItem("cats"));
-    	return localStorage.getItem("cats");
+    	console.log(typeof localStorage.getItem("cats"));
+    	let localResults = JSON.parse(localStorage.getItem("cats"));
+    	console.log(localResults[1]);
+    	return localResults;
     }
 };
 
@@ -54,7 +31,7 @@ let octopus = {
 		model.init();
 		model.getAllCats();
 		this.form = document.getElementById("form");
-		console.log(this.form);
+		//console.log(this.form);
 		view.init();
 		viewCat.init();
 		this.catClick();
@@ -62,16 +39,16 @@ let octopus = {
 	},
 	// maps through all cats
 	allCats: function() {
-		return model.cats;
+		return model.getAllCats();
 	},
 	// Tell the view which cat to display after the click on li 
 	catClick: function() {
-		for(let i = 0; i < model.cats.length; i++) {
+		for(let i = 0; i < model.getAllCats().length; i++) {
 			$("li").click(function() {
-				console.log($(this).text());
-				if( $(this).text() === model.cats[i].name ) {
+				//console.log($(this).text());
+				if( $(this).text() === model.getAllCats()[i].name ) {
 					// Set currentCat
-					model.currentCat = i;
+					localStorage.currentCat = i;
 					// return clicked cat object
 					return viewCat.showCat(model.cats[i]);
 				}
@@ -93,15 +70,7 @@ let octopus = {
 		this.form.removeAttribute("hidden");
 		model.adminShow = true;
 	},
-	updateCurrentCat: function(data) {
-		let KeyValuePair = [];
-		let SearchString = window.location.search.substring(1);
-    	let VariableArray = SearchString.split('&');
-    	for(let i = 0; i < VariableArray.length; i++){
-	        KeyValuePair.push(VariableArray[i].split('='));
-	    }
-	    console.log(KeyValuePair);
-	}
+	updateCurrentCat: null
 };
 
 //**********************************************************************//
