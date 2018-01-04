@@ -9,6 +9,8 @@ let model = {
         if (!localStorage.cats) {
             localStorage.setItem("cats", this.jsonCats);
 			localStorage.setItem("currentCat", 0);
+        }else{
+        	this.cats = this.getAllCats();
         }
     },
     updateStorage:function() {
@@ -17,7 +19,6 @@ let model = {
     },
     getAllCats: function() {
     	let localResults = JSON.parse(localStorage.getItem("cats"));
-    	console.log(localResults[1]);
     	return localResults;
     }
 };
@@ -57,8 +58,8 @@ let octopus = {
 	catClickCounter: function() {
 		$(".container").on("click", "img", function() {
 			model.cats[localStorage.currentCat].numClicks += 1;
-			viewCat.catClicksHTML(model.cats[localStorage.currentCat].numClicks);
 			model.updateStorage();
+			viewCat.catClicksHTML(model.getAllCats()[localStorage.currentCat].numClicks);
 		});
 	},
 	closeForm: function() {
