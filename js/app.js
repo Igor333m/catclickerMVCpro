@@ -72,8 +72,16 @@ let octopus = {
 		this.form.removeAttribute("hidden");
 		model.adminShow = true;
 	},
+	/**
+	* @description Updates current cat with data from form
+	* @param {array} valueList - List with all data (name, number of clicks, imgURL[optional])
+	*/
 	updateCurrentCat: function(valueList) {
 		console.log(valueList);
+		model.cats[localStorage.currentCat].name = valueList[0];
+		model.cats[localStorage.currentCat].numClicks = valueList[1];
+		model.updateStorage();
+		viewCat.showCat(model.cats[localStorage.currentCat]);
 	},
 };
 
@@ -86,26 +94,29 @@ let view = {
 		this.submit = document.querySelector("form");
 		this.resetButton = document.getElementById("resetButton");
 		this.name = document.getElementById("name");
-		this.imgUrl = document.getElementById("imgUrl");
+		this.imgUrl = document.getElementById("imgURL");
 		this.numOfClicks = document.getElementById("num_of_clicks");
 		this.admin.onclick = e => {
 			e.preventDefault();
-			console.log("Admin clicked");
+			console.log("Admin clicked"); 
 			octopus.openForm();
 		}
+		// Cancel button
 		this.cancel.onclick = e => {
 			e.preventDefault();
 			console.log("cancel clicked");
 			octopus.closeForm();
 		}
+		// Form submit
 		this.submit.onsubmit = e => {
 			// cancel the form's default action
 			e.preventDefault();
 			let valueList = [];
-			console.log(this.name.value);
 			valueList.push(this.name.value);
-			valueList.push(this.imgUrl.value);
 			valueList.push(this.numOfClicks.value);
+			if (this.imgUrl.value !== "") {
+				valueList.push(this.imgUrl.value);
+			}
 			octopus.updateCurrentCat(valueList);
 			octopus.closeForm();
 		}
