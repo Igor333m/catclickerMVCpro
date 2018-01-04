@@ -55,8 +55,12 @@ let octopus = {
 		}
 	},
 	// Update the counter
-	updateCounter: function() {
-		model.cats[localStorage.currentCat].numClicks += 1;
+	updateCounter: function(one) {
+		if (one) {
+			model.cats[localStorage.currentCat].numClicks += 1;
+		}else{
+			model.cats[localStorage.currentCat].numClicks = 0;
+		}
 		model.updateStorage();
 		viewCat.catClicksHTML(model.getAllCats()[localStorage.currentCat].numClicks);
 	},
@@ -69,10 +73,6 @@ let octopus = {
 		model.adminShow = true;
 	},
 	updateCurrentCat: null,
-
-	resetButton: function() {
-		// body...
-	}
 };
 
 //**********************************************************************//
@@ -101,9 +101,8 @@ let view = {
 		}
 		this.resetButton.onclick = e => {
 			e.preventDefault();
-			console.log(this.resetButton);
-			octopus.updateCurrentCat(e);
-			octopus.closeForm();
+			console.log("Reset clicked");
+			octopus.updateCounter();
 		}
 		const listOfCats = document.querySelector(".list");
 		octopus.allCats().forEach( cat => {
@@ -144,7 +143,7 @@ let viewCat = {
 	catClickCounter: function() {
 		this.container.on("click", "img", function() {
 			console.log("img clicks");
-			octopus.updateCounter();
+			octopus.updateCounter("one");
 		});
 	},
 	// Show number of clicks for particular cat
