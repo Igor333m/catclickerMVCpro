@@ -29,7 +29,6 @@ let octopus = {
 	init: function() {
 		model.init();
 		model.getAllCats();
-		this.form = document.getElementById("form");
 		//console.log(this.form);
 		view.init();
 		view.updateListCats();
@@ -67,11 +66,9 @@ let octopus = {
 		viewCat.catClicksHTML(model.getAllCats()[localStorage.currentCat].numClicks);
 	},
 	closeForm: function() {
-		this.form.setAttribute("hidden", true);
 		model.adminShow = false;
 	},
 	openForm: function() {
-		this.form.removeAttribute("hidden");
 		model.adminShow = true;
 	},
 	/**
@@ -100,15 +97,18 @@ let view = {
 		this.imgUrl = document.getElementById("imgURL");
 		this.numOfClicks = document.getElementById("num_of_clicks");
 		this.listOfCats = document.querySelector(".list");
+		this.form = document.getElementById("form");
 		this.admin.onclick = e => {
 			e.preventDefault();
 			console.log("Admin clicked"); 
+			this.form.removeAttribute("hidden");
 			octopus.openForm();
 		}
 		// Cancel button
 		this.cancel.onclick = e => {
 			e.preventDefault();
 			console.log("cancel clicked");
+			this.form.setAttribute("hidden", true);
 			octopus.closeForm();
 		}
 		// Form submit
