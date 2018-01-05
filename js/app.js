@@ -43,6 +43,7 @@ let octopus = {
 	catClick: function() {
 		for(let i = 0; i < model.getAllCats().length; i++) {
 			$("li").click(function() {
+				console.log("li click");
 				if( $(this).text() === model.getAllCats()[i].name ) {
 					// Set currentCat
 					localStorage.currentCat = i;
@@ -123,7 +124,7 @@ let view = {
 			}
 			octopus.updateCurrentCat(valueList);
 			octopus.closeForm();
-			return false;
+			//return false;
 		}
 		this.resetButton.onclick = e => {
 			e.preventDefault();
