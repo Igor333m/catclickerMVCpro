@@ -2,7 +2,7 @@
 let model = {
 	// Number of selected cat in the model
 	adminShow: false,
-	cats: [{ name: "Miki",	img: "cat.jpg",	numClicks: 0 },	{ name: "Donald", img: "cat2.jpg", numClicks: 0	}, { name: "Ana", img: "cat3.jpg", numClicks: 0 }, { name: "Arthur", img: "cat4.jpg", numClicks: 0 }, { name: "Aragorn",img: "cat5.jpg", numClicks: 0 }, { name: "Lilly", img: "cat6.jpg",numClicks: 0 }],
+	cats: [{ name: "Miki",	img: "img/cat.jpg",	numClicks: 0 },	{ name: "Donald", img: "img/cat2.jpg", numClicks: 0	}, { name: "Ana", img: "img/cat3.jpg", numClicks: 0 }, { name: "Arthur", img: "img/cat4.jpg", numClicks: 0 }, { name: "Aragorn",img: "img/cat5.jpg", numClicks: 0 }, { name: "Lilly", img: "img/cat6.jpg",numClicks: 0 }],
 	// Checks for localStorage and add one if none
 	init: function() {
 		this.jsonCats = JSON.stringify(this.cats);
@@ -29,7 +29,6 @@ let octopus = {
 	init: function() {
 		model.init();
 		model.getAllCats();
-		//console.log(this.form);
 		view.init();
 		view.updateListCats();
 		viewCat.init();
@@ -44,7 +43,6 @@ let octopus = {
 	catClick: function() {
 		for(let i = 0; i < model.getAllCats().length; i++) {
 			$("li").click(function() {
-				console.log("LI click");
 				if( $(this).text() === model.getAllCats()[i].name ) {
 					// Set currentCat
 					localStorage.currentCat = i;
@@ -57,7 +55,6 @@ let octopus = {
 	// Update the counter
 	updateCounter: function(one) {
 		if (one) {
-			console.log(typeof model.cats[localStorage.currentCat].numClicks);
 			model.cats[localStorage.currentCat].numClicks += 1;
 		}else{
 			model.cats[localStorage.currentCat].numClicks = 0;
@@ -76,9 +73,11 @@ let octopus = {
 	* @param {array} valueList - List with all data (name, number of clicks, imgURL[optional])
 	*/
 	updateCurrentCat: function(valueList) {
-		console.log(valueList);
 		model.cats[localStorage.currentCat].name = valueList[0];
 		model.cats[localStorage.currentCat].numClicks = valueList[1];
+		if (valueList[2]) {
+			model.cats[localStorage.currentCat].img = valueList[2];
+		}
 		model.updateStorage();
 		view.updateListCats();
 		viewCat.showCat(model.cats[localStorage.currentCat]);
@@ -100,22 +99,19 @@ let view = {
 		this.form = document.getElementById("form");
 		this.admin.onclick = e => {
 			e.preventDefault();
-			console.log("Admin clicked"); 
 			this.form.removeAttribute("hidden");
 			octopus.openForm();
 		}
 		// Cancel button
 		this.cancel.onclick = e => {
 			e.preventDefault();
-			console.log("cancel clicked");
 			this.form.setAttribute("hidden", true);
 			octopus.closeForm();
 		}
 		// Form submit
-		this.submit.onsubmit = e => {
-			// cancel the form's default action
-			
+		this.submit.onsubmit = () => {
 			let valueList = [];
+			// If form name is empty, name stays the same
 			if (this.name.value === "") {
 				valueList.push(model.cats[localStorage.currentCat].name);
 			}else{
@@ -127,10 +123,10 @@ let view = {
 			}
 			octopus.updateCurrentCat(valueList);
 			octopus.closeForm();
+			return false;
 		}
 		this.resetButton.onclick = e => {
 			e.preventDefault();
-			console.log("Reset clicked");
 			octopus.updateCounter();
 		}
 		
@@ -153,7 +149,7 @@ let viewCat = {
 		containerHtml = `
 			<article>
 				<h1>${model.getAllCats()[localStorage.currentCat].name}</h1>
-				<img src="img/${model.getAllCats()[localStorage.currentCat].img}" alt="${model.getAllCats()[localStorage.currentCat].name} the cat" data-cat="${model.getAllCats()[localStorage.currentCat].name}">
+				<img src="${model.getAllCats()[localStorage.currentCat].img}" alt="${model.getAllCats()[localStorage.currentCat].name} the cat" data-cat="${model.getAllCats()[localStorage.currentCat].name}">
 	        	<h2>Number of clicks <span>${model.getAllCats()[localStorage.currentCat].numClicks}</span></h2>
 	        </article>
 		`;
@@ -167,7 +163,7 @@ let viewCat = {
 		containerHtml = `
 			<article>
 				<h1>${cat.name}</h1>
-				<img src="img/${cat.img}" alt="${cat.name} the cat" data-cat="${cat.name}">
+				<img src="${cat.img}" alt="${cat.name} the cat" data-cat="${cat.name}">
 	        	<h2>Number of clicks <span>${cat.numClicks}</span></h2>
 	        </article>
 		`;
@@ -176,7 +172,6 @@ let viewCat = {
 	// Update the counter for clicked cat
 	catClickCounter: function() {
 		this.container.on("click", "img", function() {
-			console.log("img clicks");
 			octopus.updateCounter("one");
 		});
 	},
