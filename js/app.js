@@ -116,7 +116,11 @@ let view = {
 			// cancel the form's default action
 			
 			let valueList = [];
-			valueList.push(this.name.value);
+			if (this.name.value === "") {
+				valueList.push(model.cats[localStorage.currentCat].name);
+			}else{
+				valueList.push(this.name.value);
+			}
 			valueList.push(parseInt(this.numOfClicks.value));
 			if (this.imgUrl.value !== "") {
 				valueList.push(this.imgUrl.value);
