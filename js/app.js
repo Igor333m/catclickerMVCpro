@@ -32,6 +32,7 @@ let octopus = {
 		this.form = document.getElementById("form");
 		//console.log(this.form);
 		view.init();
+		view.updateListCats();
 		viewCat.init();
 		this.catClick();
 		viewCat.catClickCounter();
@@ -44,7 +45,7 @@ let octopus = {
 	catClick: function() {
 		for(let i = 0; i < model.getAllCats().length; i++) {
 			$("li").click(function() {
-				//console.log($(this).text());
+				console.log("LI click");
 				if( $(this).text() === model.getAllCats()[i].name ) {
 					// Set currentCat
 					localStorage.currentCat = i;
@@ -57,6 +58,7 @@ let octopus = {
 	// Update the counter
 	updateCounter: function(one) {
 		if (one) {
+			console.log(typeof model.cats[localStorage.currentCat].numClicks);
 			model.cats[localStorage.currentCat].numClicks += 1;
 		}else{
 			model.cats[localStorage.currentCat].numClicks = 0;
@@ -81,6 +83,7 @@ let octopus = {
 		model.cats[localStorage.currentCat].name = valueList[0];
 		model.cats[localStorage.currentCat].numClicks = valueList[1];
 		model.updateStorage();
+		view.updateListCats();
 		viewCat.showCat(model.cats[localStorage.currentCat]);
 	},
 };
@@ -96,6 +99,7 @@ let view = {
 		this.name = document.getElementById("name");
 		this.imgUrl = document.getElementById("imgURL");
 		this.numOfClicks = document.getElementById("num_of_clicks");
+		this.listOfCats = document.querySelector(".list");
 		this.admin.onclick = e => {
 			e.preventDefault();
 			console.log("Admin clicked"); 
@@ -110,10 +114,10 @@ let view = {
 		// Form submit
 		this.submit.onsubmit = e => {
 			// cancel the form's default action
-			e.preventDefault();
+			
 			let valueList = [];
 			valueList.push(this.name.value);
-			valueList.push(this.numOfClicks.value);
+			valueList.push(parseInt(this.numOfClicks.value));
 			if (this.imgUrl.value !== "") {
 				valueList.push(this.imgUrl.value);
 			}
@@ -125,9 +129,14 @@ let view = {
 			console.log("Reset clicked");
 			octopus.updateCounter();
 		}
-		const listOfCats = document.querySelector(".list");
+		
+	},
+	updateListCats: function() {
+		// Clear .list
+		this.listOfCats.innerHTML = "";
+		// Populate list of cat names
 		octopus.allCats().forEach( cat => {
-			listOfCats.insertAdjacentHTML("beforeend", `<li>${cat.name}</li>`);
+			this.listOfCats.insertAdjacentHTML("beforeend", `<li>${cat.name}</li>`);
 		});
 	}
 };
