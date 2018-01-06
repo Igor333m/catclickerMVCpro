@@ -92,7 +92,6 @@ form::after {
 	width: 50%;
 	margin: auto;
 	text-align: right;
-	border: solid red 1px;
 }
 
 label {
