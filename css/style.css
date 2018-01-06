@@ -11,19 +11,29 @@ html {
 html,
 body {
     width: 100%;
-    height: 100%;
     margin: 0;
     padding: 0;
+    font-family: sans-serif;
+    color: #DB381B;
 }
 
 header {
 	text-align: center;
 }
 
+h1 {
+	font-weight: bold;
+	font-size: 1.5rem;
+}
 
 aside {
-	padding-bottom: 5%;
+	padding-bottom: 1em;
 	text-align: center;
+}
+
+img {
+	max-width: 40%;
+	height: auto;
 }
 
 ul {
@@ -32,9 +42,10 @@ ul {
 }
 
 li {
-	background-color: red;
+	background-color: #17A598;
 	padding: 1em 2em;
 	margin-left: 1em;
+	margin-bottom: 1em;
 	border-radius: 0.4em;
 	box-shadow: 2px 5px 18px #888888;
 	display: inline-block;
@@ -44,18 +55,71 @@ li {
 }
 
 .container {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-column-gap: 15px;
+	text-align: center;
 }
 
-
 article {
-	width: 45%;
-	padding-left: 2em;
+
 }
 
 form {
-	width: 40%;
+	text-align: center;
+	background-color: #D5D8C8;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	color: grey;
+}
+
+.labels {
+	width: 400px;
+	margin: auto;
 	text-align: right;
 }
+
+label {
+	display: inline-block;
+	height: 30px;
+}
+
+input {
+	width: 250px;
+	height: 25px;
+	border-radius: 0.4rem;
+}
+
+button {
+	padding: 0.5rem 1rem;
+	margin: 2rem 2rem;
+	width: 110px;
+	border-radius: 0.2rem 0.8rem;
+	color: white;
+	border: none;
+	box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.75);
+}
+
+#resetButton {
+	background-color: #DB381B;
+}
+
+#admin {
+	background-color: #F3A346;
+}
+
+#cancel {
+	background-color: #EF551F;
+}
+
+button[type="submit"] {
+	background-color: #17A598;
+}
+
+button:hover {
+	box-shadow: none;
+}
+
+button:active {
+	color: grey;
+}
+

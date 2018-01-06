@@ -22,21 +22,23 @@
     <section class="container">
         
     </section>
-    <button id="resetButton">Reset clicks</button>
     <form>
+        <button id="resetButton">Reset clicks</button>
         <button id="admin">Admin</button>
         <div id="form" hidden>
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="cat_name" placeholder="Cats new name">
-            <br>
-            <label for="imgURL">ImgURL:</label>
-            <input type="text" id="imgURL" name="imgURL">
-            <br>
-            <label for="num_of_clicks">Number of clicks:</label>
-            <input type="number" id="num_of_clicks" name="number_of_clicks" required placeholder="New number of clicks">
-            <br>
+            <div class="labels">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="cat_name" placeholder="Cats new name">
+                <br>
+                <label for="imgURL">Image URL:</label>
+                <input type="text" id="imgURL" name="imgURL">
+                <br>
+                <label for="num_of_clicks">Number of clicks:</label>
+                <input type="number" id="num_of_clicks" name="number_of_clicks" required placeholder="New number of clicks">
+                <br>
+            </div>
             <button id="cancel">Cancel</button>
-            <input type="submit" value="Submit">
+            <button type="submit">Submit</button>
         </div>
     </form>
     <script src="js/app.js"></script>
