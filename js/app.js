@@ -149,9 +149,9 @@ let viewCat = {
 		this.container = $(".container");
 		containerHtml = `
 			<article>
-				<h1>${model.getAllCats()[localStorage.currentCat].name}</h1>
-				<img src="${model.getAllCats()[localStorage.currentCat].img}" alt="${model.getAllCats()[localStorage.currentCat].name} the cat" data-cat="${model.getAllCats()[localStorage.currentCat].name}">
-	        	<h2>Number of clicks <span>${model.getAllCats()[localStorage.currentCat].numClicks}</span></h2>
+				<h1>${octopus.allCats()[localStorage.currentCat].name}</h1>
+				<img src="${octopus.allCats()[localStorage.currentCat].img}" alt="${octopus.allCats()[localStorage.currentCat].name} the cat" data-cat="${octopus.allCats()[localStorage.currentCat].name}">
+	        	<h2>Number of clicks <span>${octopus.allCats()[localStorage.currentCat].numClicks}</span></h2>
 	        </article>
 		`;
 		document.querySelector(".container").insertAdjacentHTML("afterbegin", containerHtml);
